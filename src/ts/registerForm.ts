@@ -1,17 +1,16 @@
 import * as $ from "jquery";
 import { setCookie } from "./common";
-import { LoginResponse } from "./responses";
-import { prepareContainer } from "./prepareContainer"; 
+import { RegisterResponse } from "./responses";
 
-export function setupLoginForm() {
-    var loginForm = document.getElementById("login-form");
+export function setupRegisterForm() {
+    var loginForm = document.getElementById("register-form");
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault();
     })
     
     var loginButton = document.getElementById("login-btn");
     loginButton.addEventListener("click", function(event) {
-        login();
+        register();
     });
 
     var emailInputField = document.getElementById("login-form-email");
@@ -23,45 +22,60 @@ export function setupLoginForm() {
     passwordInputField.addEventListener("blur", function(event) {
         validatePassword();
     })
+
+    var repeatPasswordInputField = document.getElementById("login-form-password-repeat");
+    repeatPasswordInputField.addEventListener("blur", function(event) {
+        validatePasswordRepeat();
+    })
 }
 
-interface LoginFormElement extends HTMLFormElement {
-    email:          HTMLInputElement;
-    password:       HTMLInputElement;
+interface RegisterFormElement extends HTMLFormElement {
+    email:              HTMLInputElement;
+    password:           HTMLInputElement;
+    repeatpassword:     HTMLInputElement;
 }
 
-function login() {
-    var form = <LoginFormElement> document.getElementById("login-form");
-    
+function register() {
+    var form = <RegisterFormElement> document.getElementById("register-form");
+
     if(!(validateEmail() && validatePassword())) return;
+    
+    var informationBox = document.getElementById("information-box");
 
-    var email = form.email.value;
-    var password = form.password.value;
+    var passwordField = form.password.value;
+    var passwordRepeatField = form.repeatpassword.value;
 
-    var loginRequest = $.ajax({
-        url: "https://api.thedutchmc.nl/muce/login",
+    if(passwordField != passwordRepeatField) {
+        informationBox.innerHTML = "Passwords do not match!";
+        informationBox.style.visibility = "visible";
+        informationBox.classList.remove("form-information-green");
+        informationBox.classList.add("form-information-red");
+
+        return;
+    }
+
+    var registerRequest = $.ajax({
+        url: "https://api.thedutchmc.nl/muce/register",
         method: 'post',
         data: {
-            email: btoa(email),
-            password: btoa(password)
+            email: btoa(form.email.value),
+            password: btoa(form.password.value)
         }
     });
 
-    var informationBox = document.getElementById("information-box");
+    registerRequest.done(function(e) {
+        var response = <RegisterResponse> e;
 
-    loginRequest.done(function(e) {
-        var response = <LoginResponse> e;
-
-        if(!response.accountexists) {
-            informationBox.innerHTML = "Account does not exist!";
+        if(response.accountexists) {
+            informationBox.innerHTML = "Account already exists!"
             informationBox.style.visibility = "visible";
             informationBox.classList.remove("form-information-green");
             informationBox.classList.add("form-information-red");
             return;
         }
 
-        if(!response.login) {
-            informationBox.innerHTML = "Your E-Mail or password is invalid!";
+        if(!response.success) {
+            informationBox.innerHTML = "Something went wrong. Please try again later!";
             informationBox.style.visibility = "visible";
             informationBox.classList.remove("form-information-green");
             informationBox.classList.add("form-information-red");
@@ -76,25 +90,22 @@ function login() {
 
         informationBox.classList.remove("form-information-red");
         informationBox.classList.add("form-information-green");
-        informationBox.innerHTML = "Login successful!";
+        informationBox.innerHTML = "Registration successful!";
         informationBox.style.visibility = "visible";
-
-        //TODO redirect user to a page indicating that we're preparing their container, after that we want to redirect the user to their container.
-        prepareContainer();
     });
 
-    loginRequest.fail(function(e) {
+    registerRequest.fail(function(e) {
         informationBox.innerHTML = "Something went wrong. Please try again later!";
         informationBox.style.visibility = "visible";
         informationBox.classList.remove("form-information-green");
         informationBox.classList.add("form-information-red");
         return;
-    });
+    })
 }
 
 function validateEmail(): boolean {
     const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm
-    var emailField = (<LoginFormElement> document.getElementById("login-form")).email;
+    var emailField = (<RegisterFormElement> document.getElementById("register-form")).email;
     
     var valid = emailRegex.test(emailField.value);
     if(!valid) {
@@ -108,7 +119,22 @@ function validateEmail(): boolean {
 
 function validatePassword(): boolean {
     const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm;
-    var passwordField = (<LoginFormElement> document.getElementById("login-form")).password;
+    var passwordField = (<RegisterFormElement> document.getElementById("register-form")).password;
+
+    var valid = passwordRegex.test(passwordField.value);
+    if(!valid) {
+        passwordField.classList.add("login-form-not-valid");
+        return false;
+    } else {
+        passwordField.classList.remove("login-form-not-valid");
+        return true;
+    }
+}
+
+
+function validatePasswordRepeat(): boolean {
+    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm;
+    var passwordField = (<RegisterFormElement> document.getElementById("register-form")).repeatpassword;
 
     var valid = passwordRegex.test(passwordField.value);
     if(!valid) {

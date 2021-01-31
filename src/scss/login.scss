@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Roboto:wght@100&display=swap');
-
-html,body {
-    background-color: #3a3a3a; 
-    font-family: 'Nanum Gothic', sans-serif;
-}
-
-.root {
+.root-login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,8 +58,15 @@ html,body {
                 border-radius: 5px;
 
                 padding: .5em;
-                background-color: #f44336; /* Red */
                 color: white;
+            }
+
+            .form-information-red {
+                background-color: #f44336;
+            }
+
+            .form-information-green {
+                background-color: #4CAF50;
             }
 
             .form-input {
