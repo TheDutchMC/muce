@@ -1,0 +1,34 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install NPM dependencies
+      run: npm i typescript ts-loader sass sass-loader css-loader style-loader @types/jquery webpack webpack-cli --save-dev
+
+    - name: Build webpack
+      run: npx webpack
+
+    - name: Delete .gitignore
+      run: rm ./.gitignore
+    
+    - name: create new .gitignore
+      run: tee -a .gitignore << EOF src/ node_modules/ package-lock.json tsconfig.json webpack.config.json
+    
+    - uses: EndBug/add-and-commit@v7
+      with:
+        add: 'dist *.html'
+        author_name: TheDutchMC
+        author_email: github@thedutchmc.nl
+        branch: gh-pages
+        message: 'Automatic build for GH-Pages'
+        push: true
+        signoff: true
