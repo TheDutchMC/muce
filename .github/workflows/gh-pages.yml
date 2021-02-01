@@ -23,9 +23,12 @@ jobs:
     - name: Checkout Git
       run: git checkout -b gh-pages
     
+    - name: Set upstream
+      run: git branch --set-upstream-to=origin/master gh-pages
+
     - uses: EndBug/add-and-commit@v7
       with:
-        add: 'dist *.html'
+        add: 'dist/main.js *.html'
         author_name: TheDutchMC
         author_email: github@thedutchmc.nl
         branch: gh-pages
