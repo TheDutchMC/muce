@@ -42,5 +42,5 @@ jobs:
         author_email: github@thedutchmc.nl
         branch: gh-pages
         message: 'Automatic build for GH-Pages'
-        push: origin gh-pages
+        push: origin gh-pages -f
         signoff: true
