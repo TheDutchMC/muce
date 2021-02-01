@@ -27,7 +27,7 @@ jobs:
       run: git checkout -b gh-pages
     
     - name: Remove from git
-      run: git rm -rf --cached src/ *.json webpack.config.js
+      run: git rm -rf --cached src/ tsconfig.json webpack.config.js
 
     - name: Set upstream
       run: git branch --set-upstream-to=origin/master gh-pages
