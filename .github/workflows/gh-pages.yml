@@ -20,8 +20,11 @@ jobs:
     - name: Delete .gitignore
       run: rm .gitignore
 
-    - name:
+    - name: Checkout Git
       run: git checkout -b gh-pages
+    
+    - name: Set upstream
+      run: git branch --set-upstream-to=origin/gh-pages gh-pages
 
     - uses: EndBug/add-and-commit@v7
       with:
