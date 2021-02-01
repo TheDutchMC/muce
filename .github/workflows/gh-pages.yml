@@ -19,7 +19,10 @@ jobs:
 
     - name: Delete .gitignore
       run: rm .gitignore
-    
+
+    - name:
+      run: git checkout -b gh-pages
+
     - uses: EndBug/add-and-commit@v7
       with:
         add: 'dist *.html'
