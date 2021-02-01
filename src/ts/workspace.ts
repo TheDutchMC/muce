@@ -90,7 +90,7 @@ export function loadWorkspace() {
                 alert("Something went wrong whilst logging out!");
             }
 
-            window.location.href = "/index.html";
+            window.location.href = "./index.html";
         });
 
         logoutRequest.fail(function(e) {
