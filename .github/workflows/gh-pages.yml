@@ -17,6 +17,9 @@ jobs:
     - name: Build webpack
       run: npx webpack
 
+    - name: Delete node_modules
+      run: rm -rf node_modules
+
     - name: Delete .gitignore
       run: rm .gitignore
 
@@ -34,7 +37,7 @@ jobs:
 
     - uses: EndBug/add-and-commit@v7
       with:
-        add: '["dist/main.js", "index.html", "login.html", "preparing.html", "register.html", "workspace.html"]'
+        add: '["dist/main.js", "*.html"]'
         author_name: TheDutchMC
         author_email: github@thedutchmc.nl
         branch: gh-pages
