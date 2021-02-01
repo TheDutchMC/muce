@@ -20,15 +20,21 @@ jobs:
     - name: Delete .gitignore
       run: rm .gitignore
 
+    - name: New .gitignore
+      run: echo "node_modules/ src/ webpack.config.js tsconfig.json package-lock.json .github/" > .gitignore
+
     - name: Checkout Git
       run: git checkout -b gh-pages
     
+    - name: Remove from git
+      run: git rm -rf --cached *
+
     - name: Set upstream
       run: git branch --set-upstream-to=origin/master gh-pages
 
     - uses: EndBug/add-and-commit@v7
       with:
-        add: '["dist/main", "*.html"]'
+        add: '["dist/main.js", "*.html"]'
         author_name: TheDutchMC
         author_email: github@thedutchmc.nl
         branch: gh-pages
