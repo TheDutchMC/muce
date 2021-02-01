@@ -23,9 +23,6 @@ jobs:
     - name: Checkout Git
       run: git checkout -b gh-pages
     
-    - name: Set upstream
-      run: git branch --set-upstream-to=origin/gh-pages gh-pages
-
     - uses: EndBug/add-and-commit@v7
       with:
         add: 'dist *.html'
@@ -33,5 +30,5 @@ jobs:
         author_email: github@thedutchmc.nl
         branch: gh-pages
         message: 'Automatic build for GH-Pages'
-        push: true
+        push: origin gh-pages
         signoff: true
