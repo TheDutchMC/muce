@@ -38,11 +38,24 @@ interface RegisterFormElement extends HTMLFormElement {
 
 function register() {
     var form = <RegisterFormElement> document.getElementById("register-form");
-
-    if(!(validateEmail() && validatePassword())) return;
-    
     var informationBox = document.getElementById("information-box");
 
+    if(!validateEmail()) {
+        informationBox.innerHTML = "Invalid E-Mail address!";
+        informationBox.style.visibility = "visible";
+        informationBox.classList.remove("form-information-green");
+        informationBox.classList.add("form-information-red");
+        return;
+    }
+
+    if(!validatePassword() || !validatePasswordRepeat()) {
+        informationBox.innerHTML = "Password does not meet the requirments!";
+        informationBox.style.visibility = "visible";
+        informationBox.classList.remove("form-information-green");
+        informationBox.classList.add("form-information-red");
+        return;
+    }
+    
     var passwordField = form.password.value;
     var passwordRepeatField = form.repeatpassword.value;
 
@@ -121,7 +134,7 @@ function validateEmail(): boolean {
 }
 
 function validatePassword(): boolean {
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm;
+    const passwordRegex = /.{8,}$/gm;
     var passwordField = (<RegisterFormElement> document.getElementById("register-form")).password;
 
     var valid = passwordRegex.test(passwordField.value);
@@ -136,7 +149,7 @@ function validatePassword(): boolean {
 
 
 function validatePasswordRepeat(): boolean {
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm;
+    const passwordRegex = /.{8,}$/gm;
     var passwordField = (<RegisterFormElement> document.getElementById("register-form")).repeatpassword;
 
     var valid = passwordRegex.test(passwordField.value);

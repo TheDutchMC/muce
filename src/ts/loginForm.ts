@@ -108,7 +108,7 @@ function validateEmail(): boolean {
 }
 
 function validatePassword(): boolean {
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/gm;
+    const passwordRegex = /.{8,}$/gm;
     var passwordField = (<LoginFormElement> document.getElementById("login-form")).password;
 
     var valid = passwordRegex.test(passwordField.value);
