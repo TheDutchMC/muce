@@ -5,6 +5,8 @@
     width: 100%;
     height: 100%;
 
+    @include animation-fade-in();
+
     .login-container {
 
         margin-top: 5%;
@@ -33,13 +35,7 @@
                 justify-content: center;
 
                 .form-title {
-                    text-align: center;
-                    font-size: 2.5em;
-
-                    font-family: 'Roboto', sans-serif;
-                    font-weight: bold;
-                    letter-spacing: 0.5ch;
-                    margin-left: .5ch;
+                    @include title();
                 }
     
                 .form-subtitle {
@@ -75,6 +71,10 @@
                 margin-bottom: 2em;
             }
 
+            #login-form-password-repeat {
+                margin-bottom: .5em !important;
+            }
+
             .login-form-not-valid {
                 border-bottom: 1px solid red !important;
             }
@@ -88,6 +88,13 @@
             .form-input:hover {
                 border-bottom: 1px solid $blue;
                 transition: .2s all;
+            }
+
+            .password-requirments {
+                font-size: 0.8em;
+                text-align: center;
+                color: gray;
+                margin-bottom: 2em;
             }
 
             .form-submit {

@@ -23,3 +23,7 @@ export function getCookie(name: string): string {
     if (name && sMatch) return unescape(sMatch[1]);
     return '';
 }
+
+export function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

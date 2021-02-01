@@ -1,0 +1,11 @@
+@mixin title() {
+    text-align: center;
+    font-size: 2.5em;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.5ch;
+    margin: 0;
+    padding: 0;
+    margin-left: .5ch;
+}

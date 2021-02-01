@@ -1,11 +1,14 @@
 $blue: #2131e0;
 //$blue: #3884ff;
 
-@import "login.scss";
-@import "workspace.scss";
-
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Roboto:wght@100&display=swap');
 
+@import "common.scss";
+@import "animation.scss";
+@import "index.scss";
+@import "login.scss";
+@import "workspace.scss";
+@import "preparing.scss";
 
 html,body {
     background-color: #3a3a3a; 

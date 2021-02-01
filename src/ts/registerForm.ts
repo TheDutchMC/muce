@@ -1,6 +1,7 @@
 import * as $ from "jquery";
 import { setCookie } from "./common";
 import { RegisterResponse } from "./responses";
+import * as Config from "./config";
 
 export function setupRegisterForm() {
     var loginForm = document.getElementById("register-form");
@@ -55,7 +56,7 @@ function register() {
     }
 
     var registerRequest = $.ajax({
-        url: "https://api.thedutchmc.nl/muce/register",
+        url: Config.MUCE_API + "/register",
         method: 'post',
         data: {
             email: btoa(form.email.value),
@@ -92,6 +93,8 @@ function register() {
         informationBox.classList.add("form-information-green");
         informationBox.innerHTML = "Registration successful!";
         informationBox.style.visibility = "visible";
+
+        window.location.href = "preparing.html";
     });
 
     registerRequest.fail(function(e) {

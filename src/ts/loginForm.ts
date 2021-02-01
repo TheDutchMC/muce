@@ -1,7 +1,7 @@
 import * as $ from "jquery";
 import { setCookie } from "./common";
 import { LoginResponse } from "./responses";
-import { prepareContainer } from "./prepareContainer"; 
+import * as Config from "./config";
 
 export function setupLoginForm() {
     var loginForm = document.getElementById("login-form");
@@ -38,8 +38,10 @@ function login() {
     var email = form.email.value;
     var password = form.password.value;
 
+    
+
     var loginRequest = $.ajax({
-        url: "https://api.thedutchmc.nl/muce/login",
+        url: Config.MUCE_API + "/login",
         method: 'post',
         data: {
             email: btoa(email),
@@ -79,8 +81,7 @@ function login() {
         informationBox.innerHTML = "Login successful!";
         informationBox.style.visibility = "visible";
 
-        //TODO redirect user to a page indicating that we're preparing their container, after that we want to redirect the user to their container.
-        prepareContainer();
+        window.location.href = "preparing.html";
     });
 
     loginRequest.fail(function(e) {

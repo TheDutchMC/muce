@@ -1,6 +1,7 @@
 import { getCookie } from "./common";
-import { UserResponse } from "./responses"; 
+import { UserResponse, LogoutResponse } from "./responses"; 
 import * as $ from "jquery";
+import * as Config from "./config";
 
 export function loadWorkspace() {
 
@@ -8,13 +9,17 @@ export function loadWorkspace() {
     var userId = getCookie("user");
     var sessionId = getCookie("session");
 
+    if(userId == "" || sessionId == "") {
+        location.href = "./login.html";
+    }
+
     //Create an iframe element, linking to the docker container running the code-server instance
     var vscodeIframe= document.createElement("iframe");
     vscodeIframe.src = "https://workspace.muce.apps.thedutchmc.nl/workspace/" + userId + "/";
     
     //Make a POST request to the backend to get the email address of the user.
     $.ajax({
-        url: "https://api.thedutchmc.nl/muce/user",
+        url: Config.MUCE_API + "/user",
         method: 'post',
         data: {
             sessionId: sessionId,
@@ -61,5 +66,36 @@ export function loadWorkspace() {
 
         vscodeIframe.style.height = (h -4) + "px";
         vscodeIframe.style.width = (w-4) + "px";
+    });
+
+    var previewbtn = <HTMLLinkElement> document.getElementById("previewbtn");
+    previewbtn.href = "https://workspace.muce.apps.thedutchmc.nl/preview/" + userId;
+
+
+    var logoutBtn = document.getElementById("logoutbtn");
+    logoutBtn.addEventListener("click", function(e) {
+        var logoutRequest = $.ajax({
+            url: Config.MUCE_API + "/logout",
+            method: 'post',
+            data: {
+                userId: userId,
+                sessionId: sessionId
+            }
+        });
+
+        logoutRequest.done(function(e) {
+            var response = <LogoutResponse> e;
+
+            if(!response.success) {
+                alert("Something went wrong whilst logging out!");
+            }
+
+            window.location.href = "/index.html";
+        });
+
+        logoutRequest.fail(function(e) {
+            alert("Something went wrong whilst logging out!");
+            throw new Error(String(e));
+        });
     });
 }

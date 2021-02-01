@@ -16,3 +16,12 @@ export interface UserResponse {
     success:            boolean;
     email:              string;
 }
+
+export interface CreateContainerResponse {
+    success:            boolean;
+    sessionvalid:       boolean;
+}
+
+export interface LogoutResponse {
+    success:            boolean;
+}
