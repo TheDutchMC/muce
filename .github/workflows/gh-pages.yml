@@ -20,9 +20,6 @@ jobs:
     - name: Delete .gitignore
       run: rm .gitignore
     
-    - name: create new .gitignore
-      run: tee -a .gitignore << EOF src/ node_modules/ package-lock.json tsconfig.json webpack.config.json EOF
-    
     - uses: EndBug/add-and-commit@v7
       with:
         add: 'dist *.html'
