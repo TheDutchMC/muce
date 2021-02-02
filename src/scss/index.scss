@@ -1,4 +1,4 @@
-.root-about {
+.root-index {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -27,12 +27,19 @@
             color: gray;
         }
 
-        .poweredby {
-            color: gray;
-            font-size: .8em;
-            margin: 0;
-            margin-top:3em;
-            padding:0;
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .aboutlink {
+            margin-top: 3em;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: $blue;
+            transition: .2s all;
         }
 
         .btnholder {
@@ -45,51 +52,11 @@
             align-items: center;
             font-size: 2em;
 
-            a {
-                text-decoration: none;
-                color: black;
-            }
-
-            a:hover {
-                text-decoration: underline;
-                color: $blue;
-                transition: .2s all;
-            }
-
             .btnseperator {
                 border-left: 2px solid black;
                 height: 1.6em;
                 border-radius: 5px;
                 margin: 10px;
-            }
-        }
-
-        .linktable {
-            margin-top: 3em;
-
-            tr {
-                .left {
-                    padding-right: 10px;
-                }
-
-                td {
-
-                    p {
-                        margin: 0;
-                        padding: 0;
-                    }
-
-                    a {
-                        text-decoration: none;
-                        color: black
-                    }
-
-                    a:hover {
-                        text-decoration: underline;
-                        color: $blue;
-                        transition: .2s all;
-                    }
-                }
             }
         }
     }

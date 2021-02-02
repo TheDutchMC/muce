@@ -69,7 +69,7 @@ export function loadWorkspace() {
     });
 
     var previewbtn = <HTMLLinkElement> document.getElementById("previewbtn");
-    previewbtn.href = "https://workspace.muce.apps.thedutchmc.nl/preview/" + userId;
+    previewbtn.href = "https://workspace.muce.apps.thedutchmc.nl/preview/" + userId + "/";
 
 
     var logoutBtn = document.getElementById("logoutbtn");
