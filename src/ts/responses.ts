@@ -25,3 +25,7 @@ export interface CreateContainerResponse {
 export interface LogoutResponse {
     success:            boolean;
 }
+
+export interface HealthResponse {
+    health:             string;
+}

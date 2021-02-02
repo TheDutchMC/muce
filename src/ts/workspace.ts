@@ -15,7 +15,7 @@ export function loadWorkspace() {
 
     //Create an iframe element, linking to the docker container running the code-server instance
     var vscodeIframe= document.createElement("iframe");
-    vscodeIframe.src = "https://workspace.muce.apps.thedutchmc.nl/workspace/" + userId + "/";
+    vscodeIframe.src = Config.MUCE_WORKSPACE + "/workspace/" + userId + "/";
     
     //Make a POST request to the backend to get the email address of the user.
     $.ajax({
@@ -69,7 +69,7 @@ export function loadWorkspace() {
     });
 
     var previewbtn = <HTMLLinkElement> document.getElementById("previewbtn");
-    previewbtn.href = "https://workspace.muce.apps.thedutchmc.nl/preview/" + userId + "/";
+    previewbtn.href = Config.MUCE_WORKSPACE + "/preview/" + userId + "/";
 
 
     var logoutBtn = document.getElementById("logoutbtn");
